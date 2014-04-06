@@ -140,6 +140,7 @@ public final class MLMeleeController {
     }
     
     void buildMonsterDatabase() {
+        //armour.dxAdj used for ataacks AGINST monster
         MLMonster buildMonster = new MLMonster();
         buildMonster.index = 0;
         buildMonster.name = "Bear";
@@ -166,6 +167,35 @@ public final class MLMeleeController {
         buildMonster.normalCombat.dice = "1d6+1";
         buildMonster.hthCombat.dice = "1d6+1";
         monsterDatabase[1] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 0;
+        buildMonster.name = "Giant Snake";
+        buildMonster.strength = 12;
+        buildMonster.dexterity = 12;
+        buildMonster.movementAllowance = 6;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = -3;
+        buildMonster.armour.armourMovement = 6;
+        buildMonster.normalCombat.dice = "1d6+1";
+        buildMonster.hthCombat.dice = "2d6-1";
+        monsterDatabase[2] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 0;
+        buildMonster.name = "Giant";
+        Random rand = new Random();
+        buildMonster.strength = rand.nextInt(50) + 25;
+        buildMonster.dexterity = 9;
+        buildMonster.movementAllowance = 10;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 10;
+        //Select one weapon from available database
+        int weaponIndex = rand.nextInt(Melee.mLCharacter.weapons.length) + 1;
+        buildMonster.normalCombat = Melee.mLCharacter.weapons[weaponIndex];
+        buildMonster.hthCombat.dice = "2d6-1";
+        monsterDatabase[3] = buildMonster;
         
     }
 }
