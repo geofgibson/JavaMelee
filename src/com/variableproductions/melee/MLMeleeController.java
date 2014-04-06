@@ -5,8 +5,6 @@
 package com.variableproductions.melee;
 
 import java.beans.*;
-import static java.lang.Boolean.*;
-import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
@@ -22,11 +20,12 @@ public final class MLMeleeController {
      
     boolean stFixed, dxFixed;
     MLMonster[] monsterDatabase;
-    
+    Random rand;
     /**
      *
      */
-    public MLMeleeController() {    
+    public MLMeleeController() {  
+       rand = new Random();
        stFixed = dxFixed = false;
        monsterDatabase = new MLMonster[12];
        buildMonsterDatabase();
@@ -38,7 +37,6 @@ public final class MLMeleeController {
     public void createCharacter() {
         //randomize ST & DX
 	int stDxRatio;
-        Random rand = new Random();
         stDxRatio = rand.nextInt(8) + 1;
         //check for fixed value
         if (!stFixed) {
@@ -155,7 +153,7 @@ public final class MLMeleeController {
         buildMonster.hthCombat.dice = "3d6";
         monsterDatabase[0] = buildMonster;
         buildMonster = new MLMonster();
-        buildMonster.index = 0;
+        buildMonster.index = 1;
         buildMonster.name = "Wolf";
         buildMonster.strength = 10;
         buildMonster.dexterity = 14;
@@ -168,7 +166,7 @@ public final class MLMeleeController {
         buildMonster.hthCombat.dice = "1d6+1";
         monsterDatabase[1] = buildMonster;
         buildMonster = new MLMonster();
-        buildMonster.index = 0;
+        buildMonster.index = 2;
         buildMonster.name = "Giant Snake";
         buildMonster.strength = 12;
         buildMonster.dexterity = 12;
@@ -181,21 +179,133 @@ public final class MLMeleeController {
         buildMonster.hthCombat.dice = "2d6-1";
         monsterDatabase[2] = buildMonster;
         buildMonster = new MLMonster();
-        buildMonster.index = 0;
+        buildMonster.index = 3;
         buildMonster.name = "Giant";
-        Random rand = new Random();
-        buildMonster.strength = rand.nextInt(50) + 25;
+        //define strength on creating instance
+        //buildMonster.strength = rand.nextInt(25) + 25;
         buildMonster.dexterity = 9;
         buildMonster.movementAllowance = 10;
         buildMonster.armour.name = "None";
         buildMonster.armour.hits = 0;
         buildMonster.armour.dxAdj = 0;
         buildMonster.armour.armourMovement = 10;
+        //probably have to select weapon upon creating actual monster instance
         //Select one weapon from available database
-        int weaponIndex = rand.nextInt(Melee.mLCharacter.weapons.length) + 1;
-        buildMonster.normalCombat = Melee.mLCharacter.weapons[weaponIndex];
+        //int weaponIndex = rand.nextInt(Melee.mLCharacter.weapons.length) + 1;
+        //buildMonster.normalCombat = Melee.mLCharacter.weapons[weaponIndex];
         buildMonster.hthCombat.dice = "2d6-1";
         monsterDatabase[3] = buildMonster;
-        
+        buildMonster = new MLMonster();
+        buildMonster.index = 4;
+        buildMonster.name = "Gargoyle";
+        buildMonster.strength = 20;
+        buildMonster.dexterity = 11;
+        buildMonster.movementAllowance = 10;
+        buildMonster.armour.name = "Stone";
+        buildMonster.armour.hits = 3;
+        buildMonster.armour.dxAdj = 0;
+        //using armourMovement for flying MA
+        buildMonster.armour.armourMovement = 16;
+        buildMonster.normalCombat.dice = "2d6";
+        buildMonster.hthCombat.dice = "2d6";
+        monsterDatabase[4] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 5;
+        buildMonster.name = "Orc";
+        //set minimum ST and DX and finalize on instantiating
+        buildMonster.strength = 8;
+        buildMonster.dexterity = 8;
+        buildMonster.movementAllowance = 10;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 10;
+        buildMonster.normalCombat.dice = "new";
+        buildMonster.hthCombat.dice = "1-(size 4-2)";
+        monsterDatabase[5] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 6;
+        buildMonster.name = "Hobgoblin";
+        //set minimum ST and DX and finalize on instantiating
+        buildMonster.strength = 6;
+        buildMonster.dexterity = 6;
+        buildMonster.movementAllowance = 10;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 10;
+        buildMonster.normalCombat.dice = "new";
+        buildMonster.hthCombat.dice = "1-(size 4-2)";
+        monsterDatabase[6] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 7;
+        buildMonster.name = "Goblin";
+        //set minimum ST and DX and finalize on instantiating
+        buildMonster.strength = 4;
+        buildMonster.dexterity = 4;
+        buildMonster.movementAllowance = 10;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 10;
+        buildMonster.normalCombat.dice = "new";
+        buildMonster.hthCombat.dice = "1-(size 4-2)";
+        monsterDatabase[7] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 8;
+        buildMonster.name = "Elf";
+        //set minimum ST and DX and finalize on instantiating
+        buildMonster.strength = 6;
+        buildMonster.dexterity = 10;
+        buildMonster.movementAllowance = 12;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 12;
+        buildMonster.normalCombat.dice = "new";
+        buildMonster.hthCombat.dice = "1-(size 4-2)";
+        monsterDatabase[8] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 9;
+        buildMonster.name = "Dwarf";
+        //set minimum ST and DX and finalize on instantiating
+        buildMonster.strength = 10;
+        buildMonster.dexterity = 6;
+        buildMonster.movementAllowance = 12;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 12;
+        buildMonster.normalCombat.dice = "new";
+        buildMonster.hthCombat.dice = "1-(size 4-2)";
+        monsterDatabase[9] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 10;
+        buildMonster.name = "Hobbit";
+        //set minimum ST and DX and finalize on instantiating
+        buildMonster.strength = 4;
+        buildMonster.dexterity = 12;
+        buildMonster.movementAllowance = 10;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 10;
+        buildMonster.normalCombat.dice = "new";
+        buildMonster.hthCombat.dice = "1-(size 4-2)";
+        monsterDatabase[10] = buildMonster;
+        buildMonster = new MLMonster();
+        buildMonster.index = 11;
+        buildMonster.name = "Human";
+        //set minimum ST and DX and finalize on instantiating
+        buildMonster.strength = 8;
+        buildMonster.dexterity = 8;
+        buildMonster.movementAllowance = 10;
+        buildMonster.armour.name = "None";
+        buildMonster.armour.hits = 0;
+        buildMonster.armour.dxAdj = 0;
+        buildMonster.armour.armourMovement = 10;
+        buildMonster.normalCombat.dice = "new";
+        buildMonster.hthCombat.dice = "1-(size 4-2)";
+        monsterDatabase[11] = buildMonster;
     }
 }
