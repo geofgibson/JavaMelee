@@ -10,6 +10,7 @@ package com.variableproductions.melee;
  *
  * @author geofgibson
  */
+//This class is generic for monsters and NPCs
 public class MLMonster {
     int index, strength, dexterity, movementAllowance, adjMovement, adjDX;
     String name;
