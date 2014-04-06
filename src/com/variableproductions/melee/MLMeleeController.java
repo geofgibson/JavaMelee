@@ -27,7 +27,7 @@ public final class MLMeleeController {
      *
      */
     public MLMeleeController() {    
-       stFixed = dxFixed = FALSE;
+       stFixed = dxFixed = false;
        monsterDatabase = new MLMonster[12];
        buildMonsterDatabase();
     }
@@ -72,20 +72,11 @@ public final class MLMeleeController {
         this.buildPossessions();
     }
     void toggleStFixed() {
-        if (stFixed) {
-            stFixed = false;
-	}
-	else {//toggle must not be set then
-            stFixed = true;
-	}
+        stFixed = stFixed ? false : true;
     }
+    
     void toggleDxFixed() {
-	if (dxFixed) {
-            dxFixed = false;
-	}
-	else {//toggle must not be set then
-            dxFixed = true;
-	}
+	dxFixed = dxFixed ? false : true;
     }
     
     void selectArmour(int sender) {
