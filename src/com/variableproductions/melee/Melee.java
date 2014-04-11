@@ -18,7 +18,7 @@ public class Melee extends javax.swing.JFrame {
     /**
      *
      */
-    public MLMeleeController myController = new MLMeleeController();
+    
     javax.swing.JFrame frameToPrint;
     /**
      * Creates new form Melee
@@ -28,14 +28,14 @@ public class Melee extends javax.swing.JFrame {
         //listen for model changes to bound fields
         mLCharacter.addPropertyChangeListener(new MyPropertyChangeListener());
         //load data models for combo boxes
-        for (MLArmourModifiers armourCounter : mLCharacter.armour) {
+        for (MLArmourModifiers armourCounter : JavaMelee.myController.armourDatabase.armour) {
             armourSelect.addItem(armourCounter.name);
         }
-        for (MLWeaponSpecs weaponCounter : mLCharacter.weapons) {
+        for (MLWeaponSpecs weaponCounter : JavaMelee.myController.weaponDatabase.weapons) {
             weaponTwoSelect.addItem(weaponCounter.name);
             weaponOneSelect.addItem(weaponCounter.name);
         }
-        for (MLWeaponSpecs daggerCounter : mLCharacter.daggers) {
+        for (MLWeaponSpecs daggerCounter : JavaMelee.myController.weaponDatabase.daggers) {
             daggerSelect.addItem(daggerCounter.name);
         }
         this.setMenuBar(menuBar1);
@@ -58,7 +58,6 @@ public class Melee extends javax.swing.JFrame {
         menuBar1 = new java.awt.MenuBar();
         menu1 = new java.awt.Menu();
         menu2 = new java.awt.Menu();
-        mLCharacter1 = new com.variableproductions.melee.MLCharacter();
         strengthLock = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         strengthField = new javax.swing.JFormattedTextField();
@@ -101,7 +100,7 @@ public class Melee extends javax.swing.JFrame {
         menu2.setLabel("Edit");
         menuBar1.add(menu2);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Melee Character Card");
         setBounds(new java.awt.Rectangle(4, 16, 0, 0));
         setLocation(new java.awt.Point(200, 100));
@@ -245,83 +244,83 @@ public class Melee extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .add(6, 6, 6)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(layout.createSequentialGroup()
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(layout.createSequentialGroup()
+                                    .add(jLabel2)
+                                    .add(40, 40, 40))
+                                .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                                    .add(jLabel4)
+                                    .add(18, 18, 18)))
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(layout.createSequentialGroup()
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                        .add(jLabel5)
+                                        .add(dexterityField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(18, 18, 18)
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(jLabel6)
+                                        .add(layout.createSequentialGroup()
+                                            .add(6, 6, 6)
+                                            .add(adjDexterityField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                            .add(18, 18, 18)
+                                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                                .add(strengthLock)
+                                                .add(dexterityLock))))
+                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 220, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 220, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(31, 31, 31))
+                                .add(layout.createSequentialGroup()
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(nameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 188, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .add(layout.createSequentialGroup()
+                                            .add(1, 1, 1)
+                                            .add(strengthField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                    .add(290, 290, 290))))
+                        .add(layout.createSequentialGroup()
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(layout.createSequentialGroup()
+                                    .add(233, 233, 233)
+                                    .add(jLabel1))
+                                .add(layout.createSequentialGroup()
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(jLabel3)
+                                        .add(jLabel7))
+                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                        .add(layout.createSequentialGroup()
+                                            .add(experienceField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                            .add(jLabel13))
+                                        .add(layout.createSequentialGroup()
+                                            .add(movementField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                            .add(105, 105, 105)
+                                            .add(createButton)))))
+                            .add(101, 101, 101)))
                     .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
-                                .add(jLabel2)
-                                .add(40, 40, 40))
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                                .add(jLabel4)
-                                .add(18, 18, 18)))
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                                    .add(jLabel5)
-                                    .add(dexterityField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .add(18, 18, 18)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jLabel6)
-                                    .add(layout.createSequentialGroup()
-                                        .add(6, 6, 6)
-                                        .add(adjDexterityField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .add(18, 18, 18)
-                                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                            .add(strengthLock)
-                                            .add(dexterityLock))))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 220, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 220, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .add(31, 31, 31))
+                            .add(jLabel12)
                             .add(layout.createSequentialGroup()
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(nameField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 188, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(layout.createSequentialGroup()
-                                        .add(1, 1, 1)
-                                        .add(strengthField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 47, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                                .add(290, 290, 290))))
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(layout.createSequentialGroup()
-                                .add(233, 233, 233)
-                                .add(jLabel1))
-                            .add(layout.createSequentialGroup()
+                                    .add(jLabel10)
+                                    .add(jLabel11))
+                                .add(23, 23, 23)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jLabel3)
-                                    .add(jLabel7))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                    .add(daggerSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(weaponTwoSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                            .add(jLabel8)
+                            .add(layout.createSequentialGroup()
+                                .add(jLabel9)
+                                .add(55, 55, 55)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(layout.createSequentialGroup()
-                                        .add(experienceField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jLabel13))
-                                    .add(layout.createSequentialGroup()
-                                        .add(movementField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 131, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .add(105, 105, 105)
-                                        .add(createButton)))))
-                        .add(101, 101, 101))))
-            .add(layout.createSequentialGroup()
-                .add(6, 6, 6)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel12)
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel10)
-                            .add(jLabel11))
-                        .add(23, 23, 23)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(daggerSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(weaponTwoSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(jLabel8)
-                    .add(layout.createSequentialGroup()
-                        .add(jLabel9)
-                        .add(55, 55, 55)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(armourSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(weaponOneSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(posessionsPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 275, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .add(6, 6, 6))
+                                    .add(armourSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(weaponOneSelect, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 209, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(posessionsPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 275, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(6, 6, 6))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -395,7 +394,7 @@ public class Melee extends javax.swing.JFrame {
 
     private void strengthLockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_strengthLockActionPerformed
         // TODO add your handling code here:
-        myController.toggleStFixed();
+        JavaMelee.myController.toggleStFixed();
         if (strengthLock.isSelected()) {
             strengthLock.setSelected(false);
         }
@@ -418,7 +417,7 @@ public class Melee extends javax.swing.JFrame {
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
         // TODO add your handling code here:
-        myController.createCharacter();
+        JavaMelee.myController.createCharacter();
         //reset combo boxes to index 0
         armourSelect.setSelectedIndex(0);
         weaponOneSelect.setSelectedIndex(0);
@@ -429,7 +428,7 @@ public class Melee extends javax.swing.JFrame {
 
     private void dexterityLockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dexterityLockActionPerformed
         // TODO add your handling code here:
-         myController.toggleDxFixed();
+         JavaMelee.myController.toggleDxFixed();
         if (dexterityLock.isSelected()) {
             dexterityLock.setSelected(false);
         }
@@ -441,14 +440,14 @@ public class Melee extends javax.swing.JFrame {
     private void armourSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_armourSelectActionPerformed
         // TODO add your handling code here:
         if (armourSelect.getSelectedIndex() != -1) {
-            myController.selectArmour(armourSelect.getSelectedIndex());
+            JavaMelee.myController.selectArmour(armourSelect.getSelectedIndex());
         }
     }//GEN-LAST:event_armourSelectActionPerformed
 
     private void weaponOneSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weaponOneSelectActionPerformed
         // TODO add your handling code here:
         if (weaponOneSelect.getSelectedIndex() != -1) {
-           myController.selectWeapon1(weaponOneSelect.getSelectedIndex());
+           JavaMelee.myController.selectWeapon1(weaponOneSelect.getSelectedIndex());
            weaponOneSelect.setSelectedItem(mLCharacter.weaponOne.name);
         }
     }//GEN-LAST:event_weaponOneSelectActionPerformed
@@ -456,7 +455,7 @@ public class Melee extends javax.swing.JFrame {
     private void weaponTwoSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weaponTwoSelectActionPerformed
         // TODO add your handling code here:
         if (weaponTwoSelect.getSelectedIndex() != -1) {
-           myController.selectWeapon2(weaponTwoSelect.getSelectedIndex());
+           JavaMelee.myController.selectWeapon2(weaponTwoSelect.getSelectedIndex());
            weaponTwoSelect.setSelectedItem(mLCharacter.weaponTwo.name);
         }
     }//GEN-LAST:event_weaponTwoSelectActionPerformed
@@ -464,7 +463,7 @@ public class Melee extends javax.swing.JFrame {
     private void daggerSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daggerSelectActionPerformed
         // TODO add your handling code here:
         if (daggerSelect.getSelectedIndex() != -1) {
-           myController.selectDagger(daggerSelect.getSelectedIndex());
+           JavaMelee.myController.selectDagger(daggerSelect.getSelectedIndex());
            daggerSelect.setSelectedItem(mLCharacter.currentDagger.name);
         }
     }//GEN-LAST:event_daggerSelectActionPerformed
@@ -492,54 +491,6 @@ public class Melee extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_printMenuActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        
-        try {
-            javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Mac OS X".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-            System.out.println("set laf to:"+javax.swing.UIManager.getLookAndFeel());
-            /*
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    System.out.println("set laf to:"+info.getClassName());
-                    break;
-                }
-            }
-            */
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Melee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Melee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Melee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Melee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new Melee().setVisible(true);
-            }
-        });
-    }
-    
     /**
      *
      */
@@ -610,7 +561,6 @@ public class Melee extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     public static com.variableproductions.melee.MLCharacter mLCharacter;
-    private com.variableproductions.melee.MLCharacter mLCharacter1;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;

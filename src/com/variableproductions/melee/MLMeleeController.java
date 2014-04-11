@@ -8,10 +8,6 @@ import java.beans.*;
 import java.util.Random;
 import javax.swing.JOptionPane;
 
-
-
-
-
 /**
  *
  * @author geofgibson
@@ -19,25 +15,130 @@ import javax.swing.JOptionPane;
 public final class MLMeleeController {
      
     boolean stFixed, dxFixed;
-    MLMonster[] monsterDatabase;
+    MonsterDatabase monsterDatabase;
     Random rand;
+    ArmourDatabase armourDatabase;
+    WeaponDatabase weaponDatabase;
+    MLMonster myMonster;
+    
     /**
      *
      */
     public MLMeleeController() {  
        rand = new Random();
        stFixed = dxFixed = false;
-       monsterDatabase = new MLMonster[12];
-       buildMonsterDatabase();
+       monsterDatabase = new MonsterDatabase();
+       armourDatabase = new ArmourDatabase();
+       weaponDatabase = new WeaponDatabase();
     }
  
+    /**
+     *
+     */
+    public void createNPC() {
+        //pull NPC from database and show card
+        int newMonster = rand.nextInt(monsterDatabase.monster.length);
+        myMonster = new MLMonster();
+        myMonster = monsterDatabase.monster[newMonster];
+        //test for conditional NPC values and fill
+        switch (newMonster) {
+            case 4: //Giant
+                System.out.println("giant");
+                myMonster.strength = rand.nextInt(25) + 25;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                myMonster.normalCombat.dice = (myMonster.strength / 10) + "d6+1";
+                break;
+            case 6: // Orc
+                System.out.println("orc");
+                int stDxRatio = rand.nextInt(9);
+                myMonster.strength = 8 + stDxRatio;
+                myMonster.dexterity = 16 - stDxRatio;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                myMonster.normalCombat = JavaMelee.myController.weaponDatabase.weapons[rand.nextInt(25)];
+                break;
+            case 7: // Hobgoblin
+                System.out.println("hobgoblin");
+                stDxRatio = rand.nextInt(9);
+                myMonster.strength = 6 + stDxRatio;
+                myMonster.dexterity = 14 - stDxRatio;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                myMonster.normalCombat = JavaMelee.myController.weaponDatabase.weapons[rand.nextInt(25)];
+                break;
+            case 8: //Goblin
+                stDxRatio = rand.nextInt(11);
+                myMonster.strength = 4 + stDxRatio;
+                myMonster.dexterity = 14 - stDxRatio;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                myMonster.normalCombat = JavaMelee.myController.weaponDatabase.weapons[rand.nextInt(25)];
+                break;
+            case 9: // Elf
+                stDxRatio = rand.nextInt(9);
+                myMonster.strength = 6 + stDxRatio;
+                myMonster.dexterity = 18 - stDxRatio;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                System.out.println("elf armour: "+myMonster.armour.name);
+                System.out.println("substring: " + myMonster.armour.name.substring(0, 4));
+                if (myMonster.armour.name.substring(0, 4).equals("Leat")) {
+                    myMonster.armour.armourMovement = 10;
+                }
+                myMonster.normalCombat = JavaMelee.myController.weaponDatabase.weapons[rand.nextInt(25)];
+                break;
+            case 10: //Dwarf
+                stDxRatio = rand.nextInt(9);
+                myMonster.strength = 10 + stDxRatio;
+                myMonster.dexterity = 14 - stDxRatio;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                myMonster.normalCombat = JavaMelee.myController.weaponDatabase.weapons[rand.nextInt(25)];
+                // +1 bonus for hammers and axes
+                if (myMonster.normalCombat.name.contains("axe")) {
+                    myMonster.normalCombat.dice = myMonster.normalCombat.dice + "+1";
+                }
+                if (myMonster.normalCombat.name.toLowerCase().contains("hammer")) {
+                    myMonster.normalCombat.dice = myMonster.normalCombat.dice + "+1";
+                }
+                break;
+            case 11: // Hobbit
+                stDxRatio = rand.nextInt(5);
+                myMonster.strength = 4 + stDxRatio;
+                myMonster.dexterity = 16 - stDxRatio;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                myMonster.normalCombat = JavaMelee.myController.weaponDatabase.weapons[rand.nextInt(25)];
+                // +3 for missle or thrown
+                myMonster.normalCombat.dice = myMonster.normalCombat.dice + " +3DX +1hit  missle or thrown";
+                break;
+            case 12: // Human
+                stDxRatio = rand.nextInt(9);
+                myMonster.strength = 8 + stDxRatio;
+                myMonster.dexterity = 16 - stDxRatio;
+                myMonster.armour = JavaMelee.myController.armourDatabase.armour[rand.nextInt(4)];
+                myMonster.adjDX = myMonster.armour.dxAdj + myMonster.dexterity;
+                myMonster.normalCombat = JavaMelee.myController.weaponDatabase.weapons[rand.nextInt(25)];
+                break;
+        }
+        new NPCCard().setVisible(true);
+    }
+    
+    /**
+     *
+     */
+    public void newCharacter() {
+        //show new character card
+        new Melee().setVisible(true);
+    }
     /**
      *
      */
     public void createCharacter() {
         //randomize ST & DX
 	int stDxRatio;
-        stDxRatio = rand.nextInt(8) + 1;
+        stDxRatio = rand.nextInt(9);
         //check for fixed value
         if (!stFixed) {
             try {
@@ -56,19 +157,20 @@ public final class MLMeleeController {
             Melee.mLCharacter.setAdjustedDX(Melee.mLCharacter.dexterity + Melee.mLCharacter.currentArmour.dxAdj);	
 	}
         //Clear possessions
-        Melee.mLCharacter.currentArmour = Melee.mLCharacter.armour[0];
+        Melee.mLCharacter.currentArmour = JavaMelee.myController.armourDatabase.armour[0];
         Melee.mLCharacter.currentArmour.name = "None";
-        Melee.mLCharacter.weaponOne = Melee.mLCharacter.weapons[0];
+        Melee.mLCharacter.weaponOne = JavaMelee.myController.weaponDatabase.weapons[0];
         Melee.mLCharacter.weaponOne.name = "None";
         Melee.mLCharacter.weaponOne.dice = "";
-        Melee.mLCharacter.weaponTwo = Melee.mLCharacter.weapons[0];
+        Melee.mLCharacter.weaponTwo = JavaMelee.myController.weaponDatabase.weapons[0];
         Melee.mLCharacter.weaponTwo.name = "None";
         Melee.mLCharacter.weaponTwo.dice = "";
-        Melee.mLCharacter.currentDagger = Melee.mLCharacter.daggers[0];
+        Melee.mLCharacter.currentDagger = JavaMelee.myController.weaponDatabase.daggers[0];
         Melee.mLCharacter.currentDagger.name = "None";
         Melee.mLCharacter.currentDagger.dice = "";
         this.buildPossessions();
     }
+    
     void toggleStFixed() {
         stFixed = stFixed ? false : true;
     }
@@ -78,7 +180,7 @@ public final class MLMeleeController {
     }
     
     void selectArmour(int sender) {
-	Melee.mLCharacter.currentArmour = Melee.mLCharacter.armour[sender];
+	Melee.mLCharacter.currentArmour = JavaMelee.myController.armourDatabase.armour[sender];
 	Melee.mLCharacter.setMovementAllowance (Melee.mLCharacter.currentArmour.armourMovement);
 	Melee.mLCharacter.adjustedDX = Melee.mLCharacter.dexterity+Melee.mLCharacter.currentArmour.dxAdj;
         buildPossessions();
@@ -87,15 +189,15 @@ public final class MLMeleeController {
     
     void selectWeapon1(int sentIndex) {
 	//validate weapon selection
-	MLWeaponSpecs selectedWeapon = Melee.mLCharacter.weapons[sentIndex];
+	MLWeaponSpecs selectedWeapon = JavaMelee.myController.weaponDatabase.weapons[sentIndex];
 	int minimumStrength = selectedWeapon.stMinimum;
 	if (Melee.mLCharacter.strength >= minimumStrength) {
-            Melee.mLCharacter.weaponOne = Melee.mLCharacter.weapons[sentIndex];
+            Melee.mLCharacter.weaponOne = JavaMelee.myController.weaponDatabase.weapons[sentIndex];
 	}
 	else {
             //display sheet not enough strength
             JOptionPane.showMessageDialog(null, "You cannot use a "+selectedWeapon.name+" without a strength of at least "+selectedWeapon.stMinimum,"Not so fast ...",JOptionPane.WARNING_MESSAGE);
-            Melee.mLCharacter.weaponOne = Melee.mLCharacter.weapons[0];
+            Melee.mLCharacter.weaponOne = JavaMelee.myController.weaponDatabase.weapons[0];
             
 	}
         buildPossessions();
@@ -103,21 +205,21 @@ public final class MLMeleeController {
 
     void selectWeapon2(int sentIndex) {
 	//validate weapon selection
-	MLWeaponSpecs selectedWeapon = Melee.mLCharacter.weapons[sentIndex];
+	MLWeaponSpecs selectedWeapon = JavaMelee.myController.weaponDatabase.weapons[sentIndex];
 	int minimumStrength = selectedWeapon.stMinimum;
 	if (Melee.mLCharacter.strength >= minimumStrength) {
-            Melee.mLCharacter.weaponTwo = Melee.mLCharacter.weapons[sentIndex];
+            Melee.mLCharacter.weaponTwo = JavaMelee.myController.weaponDatabase.weapons[sentIndex];
 	}
 	else {
             //display sheet not enough strength
             JOptionPane.showMessageDialog(null, "You cannot use a "+selectedWeapon.name+" without a strength of at least "+selectedWeapon.stMinimum,"Not so fast ...",JOptionPane.WARNING_MESSAGE);
-            Melee.mLCharacter.weaponTwo = Melee.mLCharacter.weapons[0];   
+            Melee.mLCharacter.weaponTwo = JavaMelee.myController.weaponDatabase.weapons[0];   
 	}
         buildPossessions();
     }
     
     void selectDagger(int sentIndex) {
-	Melee.mLCharacter.currentDagger = Melee.mLCharacter.daggers[sentIndex];
+	Melee.mLCharacter.currentDagger = JavaMelee.myController.weaponDatabase.daggers[sentIndex];
         buildPossessions();
     }
     
@@ -136,176 +238,5 @@ public final class MLMeleeController {
         //MUST use synthesized setter to trigger KVC bindings updates!
         Melee.mLCharacter.setPossessions(possessionsString);        
     }
-    
-    void buildMonsterDatabase() {
-        //armour.dxAdj used for ataacks AGINST monster
-        MLMonster buildMonster = new MLMonster();
-        buildMonster.index = 0;
-        buildMonster.name = "Bear";
-        buildMonster.strength = 30;
-        buildMonster.dexterity = 11;
-        buildMonster.movementAllowance = 8;
-        buildMonster.armour.name = "Fur";
-        buildMonster.armour.hits = 2;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 8;
-        buildMonster.normalCombat.dice = "2d6+2";
-        buildMonster.hthCombat.dice = "3d6";
-        monsterDatabase[0] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 1;
-        buildMonster.name = "Wolf";
-        buildMonster.strength = 10;
-        buildMonster.dexterity = 14;
-        buildMonster.movementAllowance = 12;
-        buildMonster.armour.name = "Fur";
-        buildMonster.armour.hits = 2;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 12;
-        buildMonster.normalCombat.dice = "1d6+1";
-        buildMonster.hthCombat.dice = "1d6+1";
-        monsterDatabase[1] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 2;
-        buildMonster.name = "Giant Snake";
-        buildMonster.strength = 12;
-        buildMonster.dexterity = 12;
-        buildMonster.movementAllowance = 6;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = -3;
-        buildMonster.armour.armourMovement = 6;
-        buildMonster.normalCombat.dice = "1d6+1";
-        buildMonster.hthCombat.dice = "2d6-1";
-        monsterDatabase[2] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 3;
-        buildMonster.name = "Giant";
-        //define strength on creating instance
-        //buildMonster.strength = rand.nextInt(25) + 25;
-        buildMonster.dexterity = 9;
-        buildMonster.movementAllowance = 10;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 10;
-        //probably have to select weapon upon creating actual monster instance
-        //Select one weapon from available database
-        //int weaponIndex = rand.nextInt(Melee.mLCharacter.weapons.length) + 1;
-        //buildMonster.normalCombat = Melee.mLCharacter.weapons[weaponIndex];
-        buildMonster.hthCombat.dice = "2d6-1";
-        monsterDatabase[3] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 4;
-        buildMonster.name = "Gargoyle";
-        buildMonster.strength = 20;
-        buildMonster.dexterity = 11;
-        buildMonster.movementAllowance = 10;
-        buildMonster.armour.name = "Stone";
-        buildMonster.armour.hits = 3;
-        buildMonster.armour.dxAdj = 0;
-        //using armourMovement for flying MA
-        buildMonster.armour.armourMovement = 16;
-        buildMonster.normalCombat.dice = "2d6";
-        buildMonster.hthCombat.dice = "2d6";
-        monsterDatabase[4] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 5;
-        buildMonster.name = "Orc";
-        //set minimum ST and DX and finalize on instantiating
-        buildMonster.strength = 8;
-        buildMonster.dexterity = 8;
-        buildMonster.movementAllowance = 10;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 10;
-        buildMonster.normalCombat.dice = "new";
-        buildMonster.hthCombat.dice = "1-(size 4-2)";
-        monsterDatabase[5] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 6;
-        buildMonster.name = "Hobgoblin";
-        //set minimum ST and DX and finalize on instantiating
-        buildMonster.strength = 6;
-        buildMonster.dexterity = 6;
-        buildMonster.movementAllowance = 10;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 10;
-        buildMonster.normalCombat.dice = "new";
-        buildMonster.hthCombat.dice = "1-(size 4-2)";
-        monsterDatabase[6] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 7;
-        buildMonster.name = "Goblin";
-        //set minimum ST and DX and finalize on instantiating
-        buildMonster.strength = 4;
-        buildMonster.dexterity = 4;
-        buildMonster.movementAllowance = 10;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 10;
-        buildMonster.normalCombat.dice = "new";
-        buildMonster.hthCombat.dice = "1-(size 4-2)";
-        monsterDatabase[7] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 8;
-        buildMonster.name = "Elf";
-        //set minimum ST and DX and finalize on instantiating
-        buildMonster.strength = 6;
-        buildMonster.dexterity = 10;
-        buildMonster.movementAllowance = 12;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 12;
-        buildMonster.normalCombat.dice = "new";
-        buildMonster.hthCombat.dice = "1-(size 4-2)";
-        monsterDatabase[8] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 9;
-        buildMonster.name = "Dwarf";
-        //set minimum ST and DX and finalize on instantiating
-        buildMonster.strength = 10;
-        buildMonster.dexterity = 6;
-        buildMonster.movementAllowance = 12;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 12;
-        buildMonster.normalCombat.dice = "new";
-        buildMonster.hthCombat.dice = "1-(size 4-2)";
-        monsterDatabase[9] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 10;
-        buildMonster.name = "Hobbit";
-        //set minimum ST and DX and finalize on instantiating
-        buildMonster.strength = 4;
-        buildMonster.dexterity = 12;
-        buildMonster.movementAllowance = 10;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 10;
-        buildMonster.normalCombat.dice = "new";
-        buildMonster.hthCombat.dice = "1-(size 4-2)";
-        monsterDatabase[10] = buildMonster;
-        buildMonster = new MLMonster();
-        buildMonster.index = 11;
-        buildMonster.name = "Human";
-        //set minimum ST and DX and finalize on instantiating
-        buildMonster.strength = 8;
-        buildMonster.dexterity = 8;
-        buildMonster.movementAllowance = 10;
-        buildMonster.armour.name = "None";
-        buildMonster.armour.hits = 0;
-        buildMonster.armour.dxAdj = 0;
-        buildMonster.armour.armourMovement = 10;
-        buildMonster.normalCombat.dice = "new";
-        buildMonster.hthCombat.dice = "1-(size 4-2)";
-        monsterDatabase[11] = buildMonster;
-    }
+   
 }
