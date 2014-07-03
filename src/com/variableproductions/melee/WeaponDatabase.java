@@ -139,12 +139,12 @@ public class WeaponDatabase {
 	smallShield.stMinimum = 0;
 	smallShield.dxAdj = 0;
 	smallShield.name = "Small shield";
-	smallShield.dice = " 1d6";
+	smallShield.dice = ", -1 hit";
 	MLWeaponSpecs largeShield = new MLWeaponSpecs();
 	largeShield.stMinimum = 0;
 	largeShield.dxAdj = 1;
 	largeShield.name = "Large shield";
-	largeShield.dice = " 2d6";
+	largeShield.dice = ", -2 hits (-1 DX when ready)";
         
         weapons = new MLWeaponSpecs[] {noWeapon, rapier, club, hammer, cutlass, shortSword, mace, smallAxe, broadsword, mornigstar, twoHandedSword, battleAxe, javelin, spear, halberd, pikeAxe, thrownRock, sling, smallBow, horseBow, longBow, lightCrossbow, heavyCrossbow, smallShield, largeShield};
         

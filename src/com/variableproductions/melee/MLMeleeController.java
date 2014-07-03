@@ -182,7 +182,7 @@ public final class MLMeleeController {
     void selectArmour(int sender) {
 	Melee.mLCharacter.currentArmour = JavaMelee.myController.armourDatabase.armour[sender];
 	Melee.mLCharacter.setMovementAllowance (Melee.mLCharacter.currentArmour.armourMovement);
-	Melee.mLCharacter.adjustedDX = Melee.mLCharacter.dexterity+Melee.mLCharacter.currentArmour.dxAdj;
+        Melee.mLCharacter.setAdjustedDX(Melee.mLCharacter.dexterity + Melee.mLCharacter.currentArmour.dxAdj);
         buildPossessions();
     }
     
