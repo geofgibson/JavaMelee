@@ -31,12 +31,12 @@ public class ArmourDatabase {
 	MLArmourModifiers chainmail = new MLArmourModifiers();
         chainmail.hits = 3;
         chainmail.armourMovement = 6;
-        chainmail.dxAdj = -3;
+        chainmail.dxAdj = -4;
         chainmail.name = "Chainmail, -3 hits";
 	MLArmourModifiers plate = new MLArmourModifiers();
         plate.hits = 5;
-        plate.armourMovement = 6;
-        plate.dxAdj = -4;
+        plate.armourMovement = 4;
+        plate.dxAdj = -6;
         plate.name = "Plate, -5 hits";
 	
         armour = new MLArmourModifiers[] {none, leather, chainmail, plate};
